@@ -22,6 +22,19 @@ Developed & Maintained by **[@harshaparisha](https://github.com/harshaparisha)**
 
 ---
 
+## 🌟 Student Features & Practical Benefits
+
+The portal is designed around the student experience, making learning hotel management engaging, transparent, and hassle-free. Here is what students get out of the platform:
+
+* **Real-World Hotel Simulation Experience**: Practice key hotel operations concepts like Average Daily Rate (ADR), RevPAR surge pricing, and competitor benchmarks in an interactive simulation environment across 4 strategy universes.
+* **Instant Profile Verification & Roster Sync**: Complete profile setup by entering your Council Roll Number and selecting your assigned batch (A, B, C, or D) to immediately sync your attendance and task eligibility.
+* **All Study Resources in One Place (Units 1, 2, 3, & 5)**: Easily read or download official course PDF notes, operational guides, and front desk manuals uploaded directly by Mr. Rajesh.
+* **Hassle-Free Assignment Submissions**: Submit case study solutions and practical assignments online without paperwork, and receive direct numerical scores and detailed feedback from faculty.
+* **Live Attendance & Performance Scorecards**: Keep track of your daily attendance percentage and academic progress with transparent performance scorecards.
+* **100% Mobile-First Responsive Design**: Access your dashboard, tasks, and course materials anytime on mobile phones, tablets, or computers with a fast, modern user interface.
+
+---
+
 ## 🖼️ System Workflows & Illustrations
 
 Below are 3 system workflow visualizers starring **Xiaohei (小黑 / "Little Black")**, representing the student, teacher, and administrative operations:
