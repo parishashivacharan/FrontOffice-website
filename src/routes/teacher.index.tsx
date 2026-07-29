@@ -20,7 +20,6 @@ import {
   Plus,
   FileText,
 } from "lucide-react";
-import { XiaoheiSimulationIllustration } from "@/components/ui/xiaohei-illustrations";
 
 export const Route = createFileRoute("/teacher/")({
   component: TeacherDashboard,
