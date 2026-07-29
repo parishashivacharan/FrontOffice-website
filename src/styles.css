@@ -1,0 +1,213 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Clay-inspired brand card colors */
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-lavender: var(--brand-lavender);
+  --color-brand-peach: var(--brand-peach);
+  --color-brand-ochre: var(--brand-ochre);
+  --color-brand-mint: var(--brand-mint);
+  --color-surface-soft: var(--surface-soft);
+  --color-surface-card: var(--surface-card);
+
+  /* Typography — Inter only (Plain Black substitute) */
+  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  /* Clay-inspired radius: 12px base (md) */
+  --radius: 0.75rem;
+
+  /* ── Surface palette ── */
+  /* Canvas: cream-tinted white #fffaf0 */
+  --background: #fffaf0;
+  /* Ink: near-black #0a0a0a */
+  --foreground: #0a0a0a;
+  /* Card surface */
+  --card: #fffaf0;
+  --card-foreground: #0a0a0a;
+  --popover: #fffaf0;
+  --popover-foreground: #0a0a0a;
+
+  /* ── Primary (near-black CTAs, Clay-style) ── */
+  --primary: #0a0a0a;
+  --primary-foreground: #ffffff;
+  --primary-hover: #1a1a1a;
+
+  /* ── Secondary ── */
+  --secondary: #faf5e8;
+  --secondary-foreground: #0a0a0a;
+
+  /* ── Muted ── */
+  --muted: #faf5e8;
+  --muted-foreground: #6a6a6a;
+
+  /* ── Accent (ochre / gold) ── */
+  --gold: #e8b94a;
+  --gold-foreground: #0a0a0a;
+  --accent: #f5f0e0;
+  --accent-foreground: #0a0a0a;
+
+  /* ── Semantic ── */
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --success: #22c55e;
+  --warning: #f59e0b;
+
+  /* ── Borders ── */
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #0a0a0a;
+
+  /* ── Sidebar (dark surface) ── */
+  --sidebar: #0a1a1a;
+  --sidebar-foreground: #f5f0e0;
+  --sidebar-primary: #e8b94a;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #1a2a2a;
+  --sidebar-accent-foreground: #f5f0e0;
+  --sidebar-border: #1a2a2a;
+  --sidebar-ring: #e8b94a;
+
+  /* ── Brand card colors ── */
+  --brand-pink: #ff4d8b;
+  --brand-teal: #1a3a3a;
+  --brand-lavender: #b8a4ed;
+  --brand-peach: #ffb084;
+  --brand-ochre: #e8b94a;
+  --brand-mint: #a4d4c5;
+  --surface-soft: #faf5e8;
+  --surface-card: #f5f0e0;
+}
+
+.dark {
+  --background: #0a1a1a;
+  --foreground: #f5f0e0;
+  --card: #0f1f1f;
+  --card-foreground: #f5f0e0;
+  --popover: #0f1f1f;
+  --popover-foreground: #f5f0e0;
+  --primary: #e8b94a;
+  --primary-foreground: #0a0a0a;
+  --primary-hover: #d4a53e;
+  --secondary: #1a2a2a;
+  --secondary-foreground: #f5f0e0;
+  --muted: #1a2a2a;
+  --muted-foreground: #9a9a9a;
+  --accent: #1a3a3a;
+  --accent-foreground: #f5f0e0;
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #e8b94a;
+  --sidebar: #050f0f;
+  --sidebar-foreground: #f5f0e0;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+  /* Display headings: Inter 500 with negative letter-spacing (Clay's Plain Black substitute) */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+}
+
+@utility gold-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-gold), transparent);
+}
+
+/* ── Liquid Metal Button Body Animations ── */
+@keyframes liquid-metal-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes liquid-metal-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes liquid-border-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes liquid-border-sweep {
+  0% {
+    transform: translateX(-120%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(320%) rotate(25deg);
+  }
+}
+

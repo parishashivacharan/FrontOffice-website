@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /student
+Disallow: /teacher
+Disallow: /admin
+Disallow: /notifications
+Disallow: /messages
