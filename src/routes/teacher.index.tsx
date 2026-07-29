@@ -123,24 +123,6 @@ function TeacherDashboard() {
         </div>
       </div>
 
-      {/* Xiaohei Little Black (小黑) Hand-Drawn Simulation Illustration Banner */}
-      <div className="grid lg:grid-cols-3 gap-6 items-center bg-white p-6 rounded-3xl border border-[#e5e5e5] shadow-xs">
-        <div className="lg:col-span-2 space-y-2">
-          <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#0a0a0a] text-white">
-            Xiaohei (小黑) Work Overview
-          </span>
-          <h2 className="text-xl font-bold text-[#0a0a0a]">
-            Front Office Operations & Hotel Simulation Oversight
-          </h2>
-          <p className="text-xs text-[#6a6a6a] leading-relaxed">
-            Monitor 4 active market universes, track batch submissions, verify 105-student class attendance, and manage unit resources.
-          </p>
-        </div>
-        <div className="lg:col-span-1">
-          <XiaoheiSimulationIllustration className="w-full shadow-xs" />
-        </div>
-      </div>
-
       {/* Main Teacher Views */}
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Course Quick Summary */}
