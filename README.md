@@ -60,5 +60,14 @@ Institute Admin monitors overall campus activity, active user verification, batc
 
 ---
 
+## 👥 Repository Contributors
+
+| Contributor | Profile | Role |
+| :--- | :--- | :--- |
+| **Harsha Parisha** | [@harshaparisha](https://github.com/harshaparisha) | Lead Architect & Developer |
+| **Parisha Shivacharan** | [@parishashivacharan](https://github.com/parishashivacharan) | Repository Owner |
+
+---
+
 ## ✨ Developed By
 This project is completely designed, engineered, and developed by **[@harshaparisha](https://github.com/harshaparisha)** for **IHM Hyderabad Front Office Operations**.
