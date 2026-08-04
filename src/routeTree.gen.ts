@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as LabRouteImport } from './routes/lab'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as NotificationsRouteImport } from './routes/notifications'
@@ -33,7 +34,9 @@ import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
 import { Route as AdminTeachersRouteImport } from './routes/admin.teachers'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
+import { Route as StudentAssignmentsRouteImport } from './routes/student.assignments'
 import { Route as StudentAttendanceRouteImport } from './routes/student.attendance'
+import { Route as StudentLabRouteImport } from './routes/student.lab'
 import { Route as StudentProfileRouteImport } from './routes/student.profile'
 import { Route as StudentResourcesRouteImport } from './routes/student.resources'
 import { Route as TeacherIndexRouteImport } from './routes/teacher.index'
@@ -63,6 +66,11 @@ const AdminRoute = AdminRouteImport.update({
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabRoute = LabRouteImport.update({
+  id: '/lab',
+  path: '/lab',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -170,9 +178,19 @@ const StudentIndexRoute = StudentIndexRouteImport.update({
   path: '/',
   getParentRoute: () => StudentRoute,
 } as any)
+const StudentAssignmentsRoute = StudentAssignmentsRouteImport.update({
+  id: '/assignments',
+  path: '/assignments',
+  getParentRoute: () => StudentRoute,
+} as any)
 const StudentAttendanceRoute = StudentAttendanceRouteImport.update({
   id: '/attendance',
   path: '/attendance',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentLabRoute = StudentLabRouteImport.update({
+  id: '/lab',
+  path: '/lab',
   getParentRoute: () => StudentRoute,
 } as any)
 const StudentProfileRoute = StudentProfileRouteImport.update({
@@ -255,6 +273,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/calendar': typeof CalendarRoute
+  '/lab': typeof LabRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
@@ -274,7 +293,9 @@ export interface FileRoutesByFullPath {
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/teachers': typeof AdminTeachersRoute
   '/admin/users': typeof AdminUsersRoute
+  '/student/assignments': typeof StudentAssignmentsRoute
   '/student/attendance': typeof StudentAttendanceRoute
+  '/student/lab': typeof StudentLabRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resources': typeof StudentResourcesRoute
   '/teacher/attendance': typeof TeacherAttendanceRoute
@@ -296,6 +317,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/lab': typeof LabRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
@@ -313,7 +335,9 @@ export interface FileRoutesByTo {
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/teachers': typeof AdminTeachersRoute
   '/admin/users': typeof AdminUsersRoute
+  '/student/assignments': typeof StudentAssignmentsRoute
   '/student/attendance': typeof StudentAttendanceRoute
+  '/student/lab': typeof StudentLabRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resources': typeof StudentResourcesRoute
   '/teacher/attendance': typeof TeacherAttendanceRoute
@@ -337,6 +361,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/calendar': typeof CalendarRoute
+  '/lab': typeof LabRoute
   '/login': typeof LoginRoute
   '/messages': typeof MessagesRoute
   '/notifications': typeof NotificationsRoute
@@ -356,7 +381,9 @@ export interface FileRoutesById {
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/teachers': typeof AdminTeachersRoute
   '/admin/users': typeof AdminUsersRoute
+  '/student/assignments': typeof StudentAssignmentsRoute
   '/student/attendance': typeof StudentAttendanceRoute
+  '/student/lab': typeof StudentLabRoute
   '/student/profile': typeof StudentProfileRoute
   '/student/resources': typeof StudentResourcesRoute
   '/teacher/attendance': typeof TeacherAttendanceRoute
@@ -381,6 +408,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/calendar'
+    | '/lab'
     | '/login'
     | '/messages'
     | '/notifications'
@@ -400,7 +428,9 @@ export interface FileRouteTypes {
     | '/admin/tasks'
     | '/admin/teachers'
     | '/admin/users'
+    | '/student/assignments'
     | '/student/attendance'
+    | '/student/lab'
     | '/student/profile'
     | '/student/resources'
     | '/teacher/attendance'
@@ -422,6 +452,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/calendar'
+    | '/lab'
     | '/login'
     | '/messages'
     | '/notifications'
@@ -439,7 +470,9 @@ export interface FileRouteTypes {
     | '/admin/tasks'
     | '/admin/teachers'
     | '/admin/users'
+    | '/student/assignments'
     | '/student/attendance'
+    | '/student/lab'
     | '/student/profile'
     | '/student/resources'
     | '/teacher/attendance'
@@ -462,6 +495,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/calendar'
+    | '/lab'
     | '/login'
     | '/messages'
     | '/notifications'
@@ -481,7 +515,9 @@ export interface FileRouteTypes {
     | '/admin/tasks'
     | '/admin/teachers'
     | '/admin/users'
+    | '/student/assignments'
     | '/student/attendance'
+    | '/student/lab'
     | '/student/profile'
     | '/student/resources'
     | '/teacher/attendance'
@@ -505,6 +541,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   CalendarRoute: typeof CalendarRoute
+  LabRoute: typeof LabRoute
   LoginRoute: typeof LoginRoute
   MessagesRoute: typeof MessagesRoute
   NotificationsRoute: typeof NotificationsRoute
@@ -536,6 +573,13 @@ declare module '@tanstack/react-router' {
       path: '/calendar'
       fullPath: '/calendar'
       preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lab': {
+      id: '/lab'
+      path: '/lab'
+      fullPath: '/lab'
+      preLoaderRoute: typeof LabRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -685,11 +729,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentIndexRouteImport
       parentRoute: typeof StudentRoute
     }
+    '/student/assignments': {
+      id: '/student/assignments'
+      path: '/assignments'
+      fullPath: '/student/assignments'
+      preLoaderRoute: typeof StudentAssignmentsRouteImport
+      parentRoute: typeof StudentRoute
+    }
     '/student/attendance': {
       id: '/student/attendance'
       path: '/attendance'
       fullPath: '/student/attendance'
       preLoaderRoute: typeof StudentAttendanceRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/student/lab': {
+      id: '/student/lab'
+      path: '/lab'
+      fullPath: '/student/lab'
+      preLoaderRoute: typeof StudentLabRouteImport
       parentRoute: typeof StudentRoute
     }
     '/student/profile': {
@@ -833,7 +891,9 @@ const AdminRouteChildren: AdminRouteChildren = {
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface StudentRouteChildren {
+  StudentAssignmentsRoute: typeof StudentAssignmentsRoute
   StudentAttendanceRoute: typeof StudentAttendanceRoute
+  StudentLabRoute: typeof StudentLabRoute
   StudentProfileRoute: typeof StudentProfileRoute
   StudentResourcesRoute: typeof StudentResourcesRoute
   StudentIndexRoute: typeof StudentIndexRoute
@@ -844,7 +904,9 @@ interface StudentRouteChildren {
 }
 
 const StudentRouteChildren: StudentRouteChildren = {
+  StudentAssignmentsRoute: StudentAssignmentsRoute,
   StudentAttendanceRoute: StudentAttendanceRoute,
+  StudentLabRoute: StudentLabRoute,
   StudentProfileRoute: StudentProfileRoute,
   StudentResourcesRoute: StudentResourcesRoute,
   StudentIndexRoute: StudentIndexRoute,
@@ -888,6 +950,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   CalendarRoute: CalendarRoute,
+  LabRoute: LabRoute,
   LoginRoute: LoginRoute,
   MessagesRoute: MessagesRoute,
   NotificationsRoute: NotificationsRoute,

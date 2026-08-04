@@ -202,12 +202,46 @@
   }
 }
 
-@keyframes liquid-border-sweep {
-  0% {
-    transform: translateX(-120%) rotate(25deg);
+
+/* Print Media Styles for Professional Certificate & Bill Exports */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
-  100% {
-    transform: translateX(320%) rotate(25deg);
+
+  aside,
+  header,
+  nav,
+  button,
+  .no-print,
+  [role="navigation"] {
+    display: none !important;
+  }
+
+  .ml-64 {
+    margin-left: 0 !important;
+  }
+
+  main {
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .printable-document {
+    border: 3px solid #2563eb !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 2.5rem !important;
+    page-break-inside: avoid;
+    border-radius: 1.5rem !important;
   }
 }
+
 

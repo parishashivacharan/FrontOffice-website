@@ -19,6 +19,7 @@ import {
   PanelLeftOpen,
   Globe,
   Inbox,
+  FileText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import MacOSDock from "./ui/mac-os-dock";
@@ -29,7 +30,8 @@ const NAV: Record<Role, NavItem[]> = {
   student: [
     { to: "/student", label: "Dashboard", icon: LayoutDashboard },
     { to: "/student/courses", label: "Universes", icon: Globe },
-    { to: "/student/tasks", label: "Tasks", icon: ClipboardList },
+    { to: "/student/tasks", label: "Lab", icon: ClipboardList },
+    { to: "/student/assignments", label: "Tasks", icon: FileText },
     { to: "/student/resources", label: "Resources", icon: Upload },
     { to: "/student/attendance", label: "Attendance", icon: CalendarCheck },
     { to: "/notifications", label: "Announcements", icon: Megaphone },
@@ -38,7 +40,8 @@ const NAV: Record<Role, NavItem[]> = {
   teacher: [
     { to: "/teacher", label: "Dashboard", icon: LayoutDashboard },
     { to: "/teacher/courses", label: "Universes", icon: Globe },
-    { to: "/teacher/tasks/new", label: "Tasks", icon: ClipboardList },
+    { to: "/teacher/submissions", label: "Lab", icon: ClipboardList },
+    { to: "/teacher/tasks/new", label: "Tasks", icon: FileText },
     { to: "/teacher/submissions", label: "Submissions", icon: Inbox },
     { to: "/teacher/resources/new", label: "Resources", icon: Upload },
     { to: "/teacher/attendance", label: "Attendance", icon: CalendarCheck },
@@ -137,6 +140,10 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
         location.pathname === item.to ||
         (item.to !== "/" + role && location.pathname.startsWith(item.to)),
     ) || items[0];
+
+  if (location.pathname === "/student/lab" || location.pathname === "/lab" || location.pathname.startsWith("/student/lab")) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="min-h-screen bg-[#fffaf0] font-sans flex flex-col md:flex-row relative">

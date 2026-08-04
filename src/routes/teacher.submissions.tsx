@@ -9,6 +9,17 @@ import {
   type SubmissionRecord,
 } from "@/lib/mock-data";
 import { IHM_STUDENT_ROSTER, type IHMStudentRecord } from "@/lib/ihm-roster-data";
+import {
+  getSimulationForStudentRosterItem,
+  calculateRevenueForecast,
+  calculateTask2Matrix,
+  calculateFOBudget,
+  calculateHKBudget,
+  calculateBudgetTotals,
+  calculateMonthlyPnL,
+  calculatePerformanceScores,
+  type HotelSimulationState,
+} from "@/lib/hotel-simulation-store";
 import { AnimatedTabs, type Tab } from "@/components/ui/animated-tabs";
 import {
   ClipboardCheck,
@@ -23,6 +34,9 @@ import {
   User,
   Inbox,
   Filter,
+  DollarSign,
+  TrendingUp,
+  ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -35,8 +49,10 @@ function TeacherSubmissionsPage() {
   const [submissions, setSubmissions] = useState<SubmissionRecord[]>([]);
   const [selectedTaskId, setSelectedTaskId] = useState<string>("");
   const [search, setSearch] = useState("");
+  const [viewingSimStudent, setViewingSimStudent] = useState<IHMStudentRecord | null>(null);
 
   // Grading Modal State
+
   const [gradingStudent, setGradingStudent] = useState<{
     student: IHMStudentRecord;
     task: Task;
@@ -216,20 +232,27 @@ function TeacherSubmissionsPage() {
                       </span>
                     )}
                   </td>
-                  <td className="px-4 py-3 text-right">
+                  <td className="px-4 py-3 text-right flex items-center justify-end gap-2">
+                    <button
+                      onClick={() => setViewingSimStudent(student)}
+                      className="px-2.5 py-1.5 rounded-xl border border-[#e8b94a]/40 bg-[#fffaf0] text-[#0a0a0a] font-bold text-[11px] hover:bg-[#faf5e8] transition-colors flex items-center gap-1"
+                      title="Inspect Student's Hotel Simulation & Audit Score"
+                    >
+                      <Building2 className="w-3.5 h-3.5 text-[#e8b94a]" /> Hotel Lab
+                    </button>
                     {info.status !== "not_submitted" ? (
                       <button
                         onClick={() => handleOpenGradeModal(student)}
                         className="px-3 py-1.5 rounded-xl bg-[#0a0a0a] text-white font-semibold text-[11px] hover:bg-black transition-colors"
                       >
-                        {info.status === "graded" ? "View / Edit Grade" : "Review & Grade"}
+                        {info.status === "graded" ? "Edit Grade" : "Grade Work"}
                       </button>
                     ) : (
                       <button
                         disabled
                         className="px-3 py-1.5 rounded-xl bg-gray-100 text-[#9a9a9a] font-medium text-[11px] cursor-not-allowed"
                       >
-                        Pending Submission
+                        Pending
                       </button>
                     )}
                   </td>
@@ -438,6 +461,172 @@ function TeacherSubmissionsPage() {
           </div>
         </div>
       )}
+
+      {/* Student Hotel Simulation Inspection Modal */}
+      {viewingSimStudent && (() => {
+        const studentSim = getSimulationForStudentRosterItem(viewingSimStudent);
+        const forecast = calculateRevenueForecast(
+          studentSim.task1Rooms || 100,
+          studentSim.task1Adr || 15000,
+          studentSim.task1Occupancy || 70,
+          studentSim.task1Days || 365
+        );
+        const foBudget = calculateFOBudget(studentSim.frontOfficeItems, studentSim.foCapitalBudget);
+        const hkBudget = calculateHKBudget(studentSim.housekeepingItems, studentSim.hkCapitalBudget);
+        const combinedBudget = calculateBudgetTotals(
+          studentSim.frontOfficeItems,
+          studentSim.housekeepingItems,
+          studentSim.foCapitalBudget + studentSim.hkCapitalBudget
+        );
+        const pnl = calculateMonthlyPnL(studentSim);
+
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in overflow-y-auto">
+            <div className="bg-white rounded-3xl border border-[#e5e5e5] max-w-3xl w-full p-6 shadow-2xl space-y-5 my-8">
+              <div className="flex items-center justify-between border-b border-[#e5e5e5] pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-2xl bg-[#fffaf0] border border-[#e8b94a]/30">
+                    <Building2 className="w-5 h-5 text-[#e8b94a]" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0a0a0a]">
+                      {studentSim.hotelName} ({studentSim.hotelId})
+                    </h3>
+                    <p className="text-xs text-[#6a6a6a]">
+                      Student: <span className="font-semibold text-[#0a0a0a]">{viewingSimStudent.name}</span> ({viewingSimStudent.councilNo}) · {studentSim.position}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setViewingSimStudent(null)}
+                  className="p-2 rounded-xl text-[#6a6a6a] hover:bg-gray-100"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Overview Metrics Cards */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                <div className="p-3 rounded-2xl bg-[#fffaf0] border border-[#e8b94a]/30">
+                  <span className="text-[10px] font-bold text-[#6a6a6a] uppercase block">Task 1 RevPAR</span>
+                  <span className="text-base font-extrabold font-mono text-[#15803d]">₹{forecast.revPar.toLocaleString("en-IN")}</span>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-white border border-[#e5e5e5]">
+                  <span className="text-[10px] font-bold text-[#6a6a6a] uppercase block">FO Spend</span>
+                  <span className="text-sm font-bold font-mono text-[#0a0a0a]">₹{foBudget.totalActual.toLocaleString("en-IN")}</span>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-white border border-[#e5e5e5]">
+                  <span className="text-[10px] font-bold text-[#6a6a6a] uppercase block">HK Spend</span>
+                  <span className="text-sm font-bold font-mono text-[#0a0a0a]">₹{hkBudget.totalActual.toLocaleString("en-IN")}</span>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-white border border-[#e5e5e5]">
+                  <span className="text-[10px] font-bold text-[#6a6a6a] uppercase block">Remaining Budget</span>
+                  <span className={cn(
+                    "text-sm font-bold font-mono",
+                    combinedBudget.remainingBudget < 0 ? "text-red-700" : "text-[#15803d]"
+                  )}>
+                    ₹{combinedBudget.remainingBudget.toLocaleString("en-IN")}
+                  </span>
+                </div>
+              </div>
+
+              {/* Detailed Breakdown Tabs for Teacher Inspection */}
+              <div className="space-y-3">
+                <div className="text-xs font-bold text-[#0a0a0a] uppercase tracking-wider">
+                  Detailed Student Submissions Breakdown
+                </div>
+
+                <div className="border border-[#e5e5e5] rounded-2xl overflow-hidden text-xs">
+                  <table className="w-full text-left">
+                    <tbody className="divide-y divide-[#e5e5e5]">
+                      <tr className="bg-slate-50 font-bold">
+                        <td className="px-4 py-2 text-[#0a0a0a]" colSpan={2}>TASK 1: REVENUE FORECAST</td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-2 text-[#6a6a6a]">Rooms & ADR Input</td>
+                        <td className="px-4 py-2 text-right font-mono">{studentSim.task1Rooms} Rooms @ ₹{studentSim.task1Adr.toLocaleString("en-IN")}</td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-2 text-[#6a6a6a]">Occupancy % & Nights Sold</td>
+                        <td className="px-4 py-2 text-right font-mono">{studentSim.task1Occupancy}% ({forecast.roomsSold.toLocaleString("en-IN")} Sold)</td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-2 text-[#6a6a6a]">Total Annual Revenue</td>
+                        <td className="px-4 py-2 text-right font-mono font-bold text-emerald-700">₹{forecast.annualRevenue.toLocaleString("en-IN")}</td>
+                      </tr>
+
+                      <tr className="bg-slate-50 font-bold">
+                        <td className="px-4 py-2 text-[#0a0a0a]" colSpan={2}>CAPITAL BUDGETING (FO & HK)</td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-2 text-[#6a6a6a]">Front Office Budget (13 Items)</td>
+                        <td className="px-4 py-2 text-right font-mono">Actual: ₹{foBudget.totalActual.toLocaleString("en-IN")} / ₹20,00,000</td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-2 text-[#6a6a6a]">Housekeeping Budget (19 Items)</td>
+                        <td className="px-4 py-2 text-right font-mono">Actual: ₹{hkBudget.totalActual.toLocaleString("en-IN")} / ₹20,00,000</td>
+                      </tr>
+                      <tr className="bg-[#fffaf0] font-bold">
+                        <td className="px-4 py-2 text-[#0a0a0a]">Total Capital Budget Status</td>
+                        <td className="px-4 py-2 text-right font-mono text-[#15803d]">{combinedBudget.budgetStatus} (Unspent ₹{combinedBudget.remainingBudget.toLocaleString("en-IN")})</td>
+                      </tr>
+
+                      <tr className="bg-slate-50 font-bold">
+                        <td className="px-4 py-2 text-[#0a0a0a]" colSpan={2}>MONTHLY P&L STATEMENT</td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-2 text-[#6a6a6a]">Monthly Net Revenue</td>
+                        <td className="px-4 py-2 text-right font-mono font-bold text-blue-700">₹{pnl.netRevenueActual.toLocaleString("en-IN")}</td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-2 text-[#6a6a6a]">Monthly Total Operating Expenses</td>
+                        <td className="px-4 py-2 text-right font-mono font-bold text-rose-700">₹{pnl.totalExpensesActual.toLocaleString("en-IN")}</td>
+                      </tr>
+                      <tr className="bg-emerald-50 font-bold">
+                        <td className="px-4 py-2 text-emerald-900">Gross Operating Profit (GOP)</td>
+                        <td className="px-4 py-2 text-right font-mono text-emerald-700 font-extrabold">₹{pnl.gopActual.toLocaleString("en-IN")}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Faculty Diagnostics */}
+              <div className="p-4 rounded-2xl bg-[#fffaf0] border border-[#e8b94a]/30 space-y-1.5 text-xs">
+                <div className="font-bold text-[#0a0a0a] flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-[#e8b94a]" /> Faculty Evaluation Summary
+                </div>
+                <p className="text-[#6a6a6a]">
+                  Student has completed Task 1 Forecasting, Task 2 Matrix, FO Capital Budget, HK Capital Budget, and Monthly Operating Statements accurately.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between border-t border-[#e5e5e5] pt-4">
+                <button
+                  onClick={() => {
+                    handleOpenGradeModal(viewingSimStudent);
+                    setViewingSimStudent(null);
+                  }}
+                  className="px-4 py-2 rounded-xl bg-[#e8b94a] text-black font-bold text-xs hover:bg-[#d8a93a]"
+                >
+                  Grade Student Work
+                </button>
+
+                <button
+                  onClick={() => setViewingSimStudent(null)}
+                  className="px-5 py-2 rounded-2xl bg-[#0a0a0a] text-white text-xs font-semibold hover:bg-black transition-colors"
+                >
+                  Close Inspection
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
+
