@@ -450,7 +450,7 @@ export function StandaloneLabPage() {
               <div className="bg-white p-6 sm:p-8 md:p-10 rounded-3xl border border-[#e2e8f0] shadow-sm space-y-8 my-auto">
                 <div className="text-center space-y-3">
                   <span className="px-3.5 py-1 rounded-full bg-blue-50 text-[#2563eb] text-xs font-extrabold border border-blue-200">
-                    INDIAN INSTITUTE OF HOTEL MANAGEMENT
+                    INSTITUTE OF HOTEL MANAGEMENT
                   </span>
                   <h1 className="text-2xl sm:text-3xl font-black text-[#0f172a] tracking-tight">
                     Hotel Management Simulation Lab
@@ -1598,7 +1598,7 @@ export function StandaloneLabPage() {
               <div className="printable-document bg-white p-6 sm:p-10 rounded-3xl border-4 border-[#2563eb] shadow-2xl max-w-3xl mx-auto my-auto space-y-6 text-center w-full">
                 <div className="border-b-2 border-[#2563eb] pb-6 space-y-2">
                   <div className="text-xs font-black uppercase tracking-widest text-[#2563eb]">
-                    INDIAN INSTITUTE OF HOTEL MANAGEMENT
+                    INSTITUTE OF HOTEL MANAGEMENT
                   </div>
                   <h1 className="text-xl sm:text-2xl font-black text-[#0f172a] uppercase tracking-wide">
                     CERTIFICATE OF COMPLETION
